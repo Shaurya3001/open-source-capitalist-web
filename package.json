@@ -1,0 +1,32 @@
+{
+  "name": "open-source-capitalist-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open Source Capitalist — AI Lessons: a teaching site that turns credible AI talks into linked, sourced lessons.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "ingest": "tsx scripts/ingest.ts"
+  },
+  "dependencies": {
+    "framer-motion": "^12.40.0",
+    "markdown-to-jsx": "^7.7.0",
+    "next": "14.2.35",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "gray-matter": "^4.0.3",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}
