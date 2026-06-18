@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 import { MODELS, CACHE_WRITE_MULT, CACHE_READ_MULT, PRICING_AS_OF } from "@/lib/data/pricing";
 
 const fmtInt = (n: number) => Math.round(n).toLocaleString("en-US");
@@ -44,6 +45,20 @@ export function TokenBudget() {
   const [turns, setTurns] = useState(5);
   const [caching, setCaching] = useState(true);
   const [paste, setPaste] = useState("");
+
+  // Fire one "calculator_used" event on the first real interaction.
+  const usedRef = useRef(false);
+  const firstRun = useRef(true);
+  useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+    if (!usedRef.current) {
+      usedRef.current = true;
+      track("calculator_used");
+    }
+  }, [modelId, input, output, turns, caching]);
 
   const model = MODELS.find((m) => m.id === modelId) ?? MODELS[0];
 

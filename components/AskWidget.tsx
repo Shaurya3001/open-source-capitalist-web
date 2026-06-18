@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 import { useSessionKey } from "@/lib/useSessionKey";
 import { AskKey } from "./AskKey";
 
@@ -34,6 +35,7 @@ export function AskWidget() {
   async function send(q: string) {
     const question = q.trim();
     if (!question || loading) return;
+    track("chat_asked", { hasKey: !!key });
     setInput("");
     const history = msgs.map((m) => ({ role: m.role, content: m.content }));
     setMsgs((prev) => [...prev, { role: "user", content: question }]);

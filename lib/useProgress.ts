@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { track } from "@vercel/analytics";
 
 const KEY = "osc:read";
 const EVENT = "osc-progress";
@@ -41,6 +42,7 @@ export function useProgress() {
       set.add(slug);
       localStorage.setItem(KEY, JSON.stringify([...set]));
       window.dispatchEvent(new Event(EVENT));
+      track("lesson_completed"); // fires once on first completion (scroll or quiz); page path identifies the lesson
     } catch {
       /* ignore */
     }

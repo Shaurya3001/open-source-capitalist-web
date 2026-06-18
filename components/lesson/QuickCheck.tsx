@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 import type { QuizItem } from "@/lib/types";
 import { useProgress } from "@/lib/useProgress";
 
@@ -16,7 +17,11 @@ export function QuickCheck({ quiz, slug }: { quiz: QuizItem[]; slug: string }) {
     setPicked((prev) => {
       if (prev[qi] !== undefined) return prev; // lock after first answer
       const next = { ...prev, [qi]: oi };
-      if (Object.keys(next).length === quiz.length) markDone(slug);
+      if (Object.keys(next).length === quiz.length) {
+        markDone(slug);
+        const score = quiz.filter((qq, i) => next[i] === qq.answer).length;
+        track("quiz_completed", { score, total: quiz.length });
+      }
       return next;
     });
   }
